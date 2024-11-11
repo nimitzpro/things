@@ -1,0 +1,28 @@
+# ignore everything
+*
+
+# unignore source files
+!*/**/*.c
+!*/**/*.cpp
+!*/**/*.go
+!*/**/*.js
+!*/**/*.odin
+!*/**/*.py
+!*/**/*.rs
+!*/**/*.ts
+!*/**/*.html
+!*/**/*.css
+!*/**/*.sh
+!*/**/*.md
+!*/**/*.tex
+!*/**/*.typst
+
+# unignore folders
+!*/
+
+# ignore all files/directories with _ignore appended
+*_ignore
+
+# unignore individual files
+!.gitignore
+!README.md
