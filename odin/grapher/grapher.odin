@@ -23,76 +23,76 @@ sfx4 :: proc(x: f32) -> f32 {
 
 // --- VECTOR FUNCTIONS ---
 // f := <e^x, -2y>
-// fx :: proc(vec: ^rl.Vector2) -> f32 {
+// fx :: proc(vec: rl.Vector2) -> f32 {
 // 	return math.pow(math.e, vec[0])
 // }
-// dfx :: proc(vec: ^rl.Vector2) -> f32 {
+// dfx :: proc(vec: rl.Vector2) -> f32 {
 // 	return fx(vec)
 // }
-// fy :: proc(vec: ^rl.Vector2) -> f32 {
+// fy :: proc(vec: rl.Vector2) -> f32 {
 // 	return -2 * vec[1]
 // }
-// dfy :: proc(vec: ^rl.Vector2) -> f32 {
+// dfy :: proc(vec: rl.Vector2) -> f32 {
 // 	return fy(vec) / vec[1]
 // }
 
 // f := <-xy, y>
-fx :: proc(vec: ^rl.Vector2) -> f32 {
-	return -vec[0] * vec[1]
-}
-fy :: proc(vec: ^rl.Vector2) -> f32 {
-	return vec[1]
-}
-dfx :: proc(vec: ^rl.Vector2) -> f32 {
-	return -vec[1]
-}
-dfy :: proc(vec: ^rl.Vector2) -> f32 {
-	return 1
-}
-
-// f := <y, 0>
-// fx :: proc(vec: ^rl.Vector2) -> f32 {
+// fx :: proc(vec: rl.Vector2) -> f32 {
+// 	return -vec[0] * vec[1]
+// }
+// fy :: proc(vec: rl.Vector2) -> f32 {
 // 	return vec[1]
 // }
-// fy :: proc(vec: ^rl.Vector2) -> f32 {
+// dfx :: proc(vec: rl.Vector2) -> f32 {
+// 	return -vec[1]
+// }
+// dfy :: proc(vec: rl.Vector2) -> f32 {
+// 	return 1
+// }
+
+// f := <y, 0>
+// fx :: proc(vec: rl.Vector2) -> f32 {
+// 	return vec[1]
+// }
+// fy :: proc(vec: rl.Vector2) -> f32 {
 // 	return 0
 // }
-// dfx :: proc(vec: ^rl.Vector2) -> f32 {
+// dfx :: proc(vec: rl.Vector2) -> f32 {
 // 	return 0
 // }
-// dfy :: proc(vec: ^rl.Vector2) -> f32 {
+// dfy :: proc(vec: rl.Vector2) -> f32 {
 // 	return 0
 // }
 
 // f := <-y, x>
-// fx :: proc(vec: ^rl.Vector2) -> f32 {
-// 	return -vec[1]
-// }
-// fy :: proc(vec: ^rl.Vector2) -> f32 {
-// 	return vec[0]
-// }
-// dfx :: proc(vec: ^rl.Vector2) -> f32 {
-// 	return 0
-// }
-// dfy :: proc(vec: ^rl.Vector2) -> f32 {
-// 	return 0
-// }
+fx :: proc(vec: rl.Vector2) -> f32 {
+	return -vec[1]
+}
+fy :: proc(vec: rl.Vector2) -> f32 {
+	return vec[0]
+}
+dfx :: proc(vec: rl.Vector2) -> f32 {
+	return 0
+}
+dfy :: proc(vec: rl.Vector2) -> f32 {
+	return 0
+}
 
 // f:= <x^2 * y, y - x*y^2>
-// fx :: proc(vec: ^rl.Vector2) -> f32 {
+// fx :: proc(vec: rl.Vector2) -> f32 {
 // 	return vec[0] * vec[0] * vec[1]
 // }
-// fy :: proc(vec: ^rl.Vector2) -> f32 {
+// fy :: proc(vec: rl.Vector2) -> f32 {
 // 	return vec[1] - (vec[0] * vec[1] * vec[1])
 // }
-// dfx :: proc(vec: ^rl.Vector2) -> f32 {
+// dfx :: proc(vec: rl.Vector2) -> f32 {
 // 	return 2 * vec[0] * vec[1]
 // }
-// dfy :: proc(vec: ^rl.Vector2) -> f32 {
+// dfy :: proc(vec: rl.Vector2) -> f32 {
 // 	return 1 - (2 * vec[0] * vec[1])
 // }
 
-div :: proc(vec: ^rl.Vector2) -> f32 {
+div :: proc(vec: rl.Vector2) -> f32 {
 	return dfx(vec) + dfy(vec)
 }
 
@@ -185,7 +185,7 @@ draw_axes :: proc() {
 // }
 draw_points :: proc(input: ^[]rl.Vector2) {
 	for i := 0; i < len(input); i += 1 {
-		divergence := div(&[2]f32{input[i][0], input[i][1]})
+		divergence := div([2]f32{input[i][0], input[i][1]})
 		// fmt.println("divergence of ", input[i][0], " and ", input[i][1], " = ", divergence)
 		color := rl.WHITE
 		if divergence > 0 {
@@ -194,8 +194,8 @@ draw_points :: proc(input: ^[]rl.Vector2) {
 			color = rl.RED
 		}
 
-		xof := fx(&[2]f32{input[i][0], input[i][1]})
-		yof := fy(&[2]f32{input[i][0], input[i][1]})
+		xof := fx([2]f32{input[i][0], input[i][1]})
+		yof := fy([2]f32{input[i][0], input[i][1]})
 
 		vector_scale := math.sqrt(
 			math.pow(math.abs(yof - input[i][1]), 2) + math.pow(math.abs(xof - input[i][0]), 2),
@@ -261,7 +261,7 @@ draw_points :: proc(input: ^[]rl.Vector2) {
 										)))),
 			},
 		)
-		points := []^rl.Vector2{&v1, &v2, &v3} // points counter clockwise for rl triangle
+		points := []rl.Vector2{v1, v2, v3} // points counter clockwise for rl triangle
 		crossz :=
 			(points[1][0] - points[0][0]) * (points[2][1] - points[1][1]) -
 			((points[1][1] - points[0][1]) * (points[2][0] - points[1][0]))
@@ -274,10 +274,10 @@ draw_points :: proc(input: ^[]rl.Vector2) {
 		points[1][1] = f32(HALF_HEIGHT) - points[1][1]
 		points[2][0] += f32(HALF_WIDTH)
 		points[2][1] = f32(HALF_HEIGHT) - points[2][1]
-		// rl.DrawCircleV(points[0]^, 2, rl.RED)
-		// rl.DrawCircleV(points[1]^, 2, rl.GREEN)
-		// rl.DrawCircleV(points[2]^, 2, rl.BLUE)
-		rl.DrawTriangle(points[0]^, points[1]^, points[2]^, color)
+		// rl.DrawCircleV(points[0], 2, rl.RED)
+		// rl.DrawCircleV(points[1], 2, rl.GREEN)
+		// rl.DrawCircleV(points[2], 2, rl.BLUE)
+		rl.DrawTriangle(points[0], points[1], points[2], color)
 
 		// fmt.println(input[i] * SCALE, points, sep = " | ")
 	}
