@@ -37,18 +37,18 @@ sfx4 :: proc(x: f32) -> f32 {
 // }
 
 // f := <-xy, y>
-//fx :: proc(vec: ^rl.Vector2) -> f32 {
-//	return -vec[0] * vec[1]
-//}
-//fy :: proc(vec: ^rl.Vector2) -> f32 {
-//	return vec[1]
-//}
-//dfx :: proc(vec: ^rl.Vector2) -> f32 {
-//	return -vec[1]
-//}
-//dfy :: proc(vec: ^rl.Vector2) -> f32 {
-//	return 1
-//}
+fx :: proc(vec: ^rl.Vector2) -> f32 {
+	return -vec[0] * vec[1]
+}
+fy :: proc(vec: ^rl.Vector2) -> f32 {
+	return vec[1]
+}
+dfx :: proc(vec: ^rl.Vector2) -> f32 {
+	return -vec[1]
+}
+dfy :: proc(vec: ^rl.Vector2) -> f32 {
+	return 1
+}
 
 // f := <y, 0>
 // fx :: proc(vec: ^rl.Vector2) -> f32 {
@@ -65,32 +65,32 @@ sfx4 :: proc(x: f32) -> f32 {
 // }
 
 // f := <-y, x>
-fx :: proc(vec: ^rl.Vector2) -> f32 {
-	return -vec[1]
-}
-fy :: proc(vec: ^rl.Vector2) -> f32 {
-	return vec[0]
-}
-dfx :: proc(vec: ^rl.Vector2) -> f32 {
-	return 0
-}
-dfy :: proc(vec: ^rl.Vector2) -> f32 {
-	return 0
-}
+// fx :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return -vec[1]
+// }
+// fy :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return vec[0]
+// }
+// dfx :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return 0
+// }
+// dfy :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return 0
+// }
 
 // f:= <x^2 * y, y - x*y^2>
-//fx :: proc(vec: ^rl.Vector2) -> f32 {
-//	return vec[0] * vec[0] * vec[1]
-//}
-//fy :: proc(vec: ^rl.Vector2) -> f32 {
-//	return vec[1] - (vec[0] * vec[1] * vec[1])
-//}
-//dfx :: proc(vec: ^rl.Vector2) -> f32 {
-//	return 2 * vec[0] * vec[1]
-//}
-//dfy :: proc(vec: ^rl.Vector2) -> f32 {
-//	return 1 - (2 * vec[0] * vec[1])
-//}
+// fx :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return vec[0] * vec[0] * vec[1]
+// }
+// fy :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return vec[1] - (vec[0] * vec[1] * vec[1])
+// }
+// dfx :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return 2 * vec[0] * vec[1]
+// }
+// dfy :: proc(vec: ^rl.Vector2) -> f32 {
+// 	return 1 - (2 * vec[0] * vec[1])
+// }
 
 div :: proc(vec: ^rl.Vector2) -> f32 {
 	return dfx(vec) + dfy(vec)
@@ -217,17 +217,16 @@ draw_points :: proc(input: ^[]rl.Vector2) {
 
 		v1 := rl.Vector2(
 			[2]f32 {
-				f32(HALF_WIDTH) + (xof * (ARROW_SCALE + 2) + input[i][0] * SCALE),
-				f32(HALF_HEIGHT) - (yof * (ARROW_SCALE + 2) + input[i][1] * SCALE),
+				(xof * (ARROW_SCALE + 2) + input[i][0] * SCALE),
+				(yof * (ARROW_SCALE + 2) + input[i][1] * SCALE),
 			},
 		)
 		pi_modifier: f32 = 0
-		if (yof < input[i][1]) {
+		if (xof < input[i][0]) {
 			pi_modifier = math.PI
 		}
 		v2 := rl.Vector2(
 			[2]f32 {
-				f32(HALF_WIDTH) +
 				(input[i][0] * SCALE) +
 				ARROW_SCALE *
 					(xof +
@@ -235,21 +234,17 @@ draw_points :: proc(input: ^[]rl.Vector2) {
 										pi_modifier +
 										math.atan(-(xof - input[i][0]) / (yof - input[i][1])),
 									))),
-				f32(HALF_HEIGHT) -
 				((input[i][1] * SCALE) +
-						ARROW_SCALE *
-							(yof +
-									(math.sin(
-												pi_modifier +
-												math.atan(
-													-(xof - input[i][0]) / (yof - input[i][1]),
-												),
-											)))),
+					ARROW_SCALE *
+						(yof +
+								(math.sin(
+											pi_modifier +
+											math.atan(-(xof - input[i][0]) / (yof - input[i][1])),
+										)))),
 			},
 		)
 		v3 := rl.Vector2(
 			[2]f32 {
-				f32(HALF_WIDTH) +
 				(input[i][0] * SCALE) +
 				ARROW_SCALE *
 					(xof -
@@ -257,31 +252,34 @@ draw_points :: proc(input: ^[]rl.Vector2) {
 										pi_modifier +
 										math.atan(-(xof - input[i][0]) / (yof - input[i][1])),
 									))),
-				f32(HALF_HEIGHT) -
 				((input[i][1] * SCALE) +
-						ARROW_SCALE *
-							(yof -
-									(math.sin(
-												pi_modifier +
-												math.atan(
-													-(xof - input[i][0]) / (yof - input[i][1]),
-												),
-											)))),
+					ARROW_SCALE *
+						(yof -
+								(math.sin(
+											pi_modifier +
+											math.atan(-(xof - input[i][0]) / (yof - input[i][1])),
+										)))),
 			},
 		)
-		// rl.DrawCircleV(v1, 3, rl.RED)
-		// rl.DrawCircleV(v2, 3, rl.GREEN)
-		// rl.DrawCircleV(v3, 3, rl.BLUE)
-		points := []rl.Vector2{v1, v2, v3} // points counter clockwise for rl triangle
-		for i := 0; i < len(points) - 1; i += 1 {
-			if points[i][0] < points[i + 1][0] {
-				points[i], points[i + 1] = points[i + 1], points[i]
-				i -= 1
-			}
+		points := []^rl.Vector2{&v1, &v2, &v3} // points counter clockwise for rl triangle
+		crossz :=
+			(points[1][0] - points[0][0]) * (points[2][1] - points[1][1]) -
+			((points[1][1] - points[0][1]) * (points[2][0] - points[1][0]))
+		if crossz < 0 { 	// if clockwise, reverse
+			points[1], points[2] = points[2], points[1]
 		}
-		rl.DrawTriangle(points[0], points[1], points[2], rl.WHITE)
+		points[0][0] += f32(HALF_WIDTH)
+		points[0][1] = f32(HALF_HEIGHT) - points[0][1]
+		points[1][0] += f32(HALF_WIDTH)
+		points[1][1] = f32(HALF_HEIGHT) - points[1][1]
+		points[2][0] += f32(HALF_WIDTH)
+		points[2][1] = f32(HALF_HEIGHT) - points[2][1]
+		// rl.DrawCircleV(points[0]^, 2, rl.RED)
+		// rl.DrawCircleV(points[1]^, 2, rl.GREEN)
+		// rl.DrawCircleV(points[2]^, 2, rl.BLUE)
+		rl.DrawTriangle(points[0]^, points[1]^, points[2]^, color)
 
-		// fmt.println(input[i] * SCALE, v1, v2, v3, sep = " | ")
+		// fmt.println(input[i] * SCALE, points, sep = " | ")
 	}
 }
 
