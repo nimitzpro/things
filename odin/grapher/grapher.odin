@@ -17,7 +17,8 @@ sfx3 :: proc(x: f32) -> f32 {
 	return -2 * x
 }
 sfx4 :: proc(x: f32) -> f32 {
-	return 0.5 * x
+	// return 0.5 * x
+	return 2 * math.sin(x)
 }
 
 
@@ -304,7 +305,7 @@ draw_simples :: proc(funcs: ^[](proc(x: f32) -> f32)) {
 
 draw_world :: #force_inline proc(world: ^World, colors: []rl.Color) {
 	draw_axes()
-	//draw_simples(&[](proc(x: f32) -> f32){sfx1, sfx2, sfx3, sfx4})
+	// draw_simples(&[](proc(x: f32) -> f32){sfx1, sfx2, sfx3, sfx4})
 	input := make_slice([]rl.Vector2, 100)
 	j := 0
 	for i := 0; i < len(input); i += 1 {
@@ -370,7 +371,7 @@ main :: proc() {
 	rl.InitWindow(window.width, window.height, window.name)
 	rl.SetWindowState(window.control_flags)
 	// rl.SetTargetFPS(window.fps)
-	rl.SetTargetFPS(60)
+	rl.SetTargetFPS(10)
 	for !rl.WindowShouldClose() {
 		if rl.IsWindowResized() {
 			window.width = rl.GetScreenWidth()

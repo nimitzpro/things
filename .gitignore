@@ -13,9 +13,12 @@
 !*/**/*.html
 !*/**/*.css
 !*/**/*.sh
+
+# unignore other file types
 !*/**/*.md
 !*/**/*.tex
 !*/**/*.typst
+!*/**/*.txt
 
 # unignore folders
 !*/
