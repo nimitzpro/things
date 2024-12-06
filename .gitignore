@@ -8,14 +8,22 @@
 !*/**/*.out
 !*/**/*.go
 !*/**/*.mod
-!*/**/*.js
 !*/**/*.odin
 !*/**/*.py
 !*/**/*.rs
-!*/**/*.ts
+!*/**/*.sh
+
+# web files
 !*/**/*.html
 !*/**/*.css
-!*/**/*.sh
+!*/**/*.js
+!*/**/*.jsx
+!*/**/*.ts
+!*/**/*.tsx
+!*/**/*.vue
+!*/**/*.json
+!*/**/*.xml
+
 
 # unignore other file types
 !*/**/*.md
