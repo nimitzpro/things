@@ -4,7 +4,10 @@
 # unignore source files
 !*/**/*.c
 !*/**/*.cpp
+!*/**/*.in
+!*/**/*.out
 !*/**/*.go
+!*/**/*.mod
 !*/**/*.js
 !*/**/*.odin
 !*/**/*.py
